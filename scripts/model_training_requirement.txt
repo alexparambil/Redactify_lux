@@ -1,0 +1,5 @@
+scikit-learn
+pdfplumber
+joblib
+fastapi
+uvicorn
