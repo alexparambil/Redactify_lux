@@ -4,6 +4,7 @@ from app.utils import extract_text
 from app.classify import classify_text
 from app.redact import hybrid_redact
 from fastapi.responses import StreamingResponse
+from app.utils import save_redacted_pdf_with_layout
 import os
 import io
 app = FastAPI()
@@ -47,10 +48,8 @@ async def redact_pdf(file: UploadFile = File(...), output_format: str = "text"):
     redacted_text, entities = hybrid_redact(text)
 
     if output_format == "pdf":
-        from app.utils import save_redacted_pdf
-        pdf_path = save_redacted_pdf(redacted_text, file.filename)
-
-        # Open PDF file as bytes
+        from app.utils import save_redacted_pdf_with_layout
+        pdf_path = save_redacted_pdf_with_layout(content, entities, file.filename)
         pdf_file = open(pdf_path, "rb")
         return StreamingResponse(pdf_file, media_type="application/pdf", headers={
             "Content-Disposition": f"attachment; filename=redacted_{file.filename}"
@@ -66,7 +65,10 @@ async def redact_pdf(file: UploadFile = File(...), output_format: str = "text"):
     if output_format in ["text", "both"]:
         result["redacted_text"] = redacted_text
     if output_format == "both":
-        from app.utils import save_redacted_pdf
-        pdf_path = save_redacted_pdf(redacted_text, file.filename)
-        result["redacted_pdf_path"] = pdf_path
+        from app.utils import save_redacted_pdf_with_layout
+        pdf_path = save_redacted_pdf_with_layout(content, entities, file.filename)
+        pdf_file = open(pdf_path, "rb")
+        return StreamingResponse(pdf_file, media_type="application/pdf", headers={
+            "Content-Disposition": f"attachment; filename=redacted_{file.filename}"
+        })
     return result

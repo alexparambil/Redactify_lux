@@ -1,0 +1,6 @@
+uvicorn server
+python -m uvicorn app.main:app --reload
+
+windows cmd curl
+
+curl -X POST "http://127.0.0.1:8000/redact/?output_format=pdf" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@<input file path>" --output redacted_output.pdf

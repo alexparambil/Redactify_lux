@@ -23,7 +23,7 @@ def ml_redact_entities(text: str):
     for ent in doc.ents:
         # Replace each entity text with '[REDACTED]'
         redacted_text = redacted_text.replace(ent.text, "[REDACTED]")
-
+        print("ML:",redacted_text)
     return redacted_text, [ent.text for ent in doc.ents]
 
 def regex_redact(text: str) -> Tuple[str, List[str]]:
@@ -36,11 +36,9 @@ def regex_redact(text: str) -> Tuple[str, List[str]]:
     return redacted, matches
 
 def hybrid_redact(text: str) -> Tuple[str, List[str]]:
-    # Step 1: ML-based redaction
     ml_redacted_text, ml_entities = ml_redact_entities(text)
-
-    # Step 2: Regex-based redaction on ML output
     fully_redacted_text, regex_entities = regex_redact(ml_redacted_text)
 
-    all_entities = ml_entities + regex_entities
+    all_entities = list(set(ml_entities + regex_entities))
     return fully_redacted_text, all_entities
+
