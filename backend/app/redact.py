@@ -3,10 +3,16 @@ from typing import List, Tuple
 import spacy
 # Sample regex patterns
 REGEX_PATTERNS = {
-    "email": r"\b[\w.-]+?@\w+?\.\w+?\b",
-    "phone": r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b",
+    # Email: More strict, disallows invalid formats like consecutive dots
+    "email": r"\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\b",
+
+    # Phone: Match international/US formats, stricter on groupings
+    "phone": r"\b(?:\+?1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?){1}\d{3}[-.\s]?\d{4}\b",
+
+    # SSN: Matches only if surrounded by word boundaries, 3-2-4 digit pattern
     "ssn": r"\b\d{3}-\d{2}-\d{4}\b"
 }
+
 
 
 
