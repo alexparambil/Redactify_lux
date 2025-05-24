@@ -1,13 +1,23 @@
 import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 
+function toRegularCase(str) {
+  return str
+    .replace(/([A-Z])/g, ' $1')         // insert space before capital letters
+    .replace(/^./, s => s.toUpperCase()) // capitalize first letter
+    .replace(/_/g, ' ').toUpperCase()
+    .trim(); 
+                                // remove leading space
+}
+
 function OutputDisplay({ data }) {
   return (
+    
     <Box mt={4} maxWidth="1200px" mx="auto">
       {/* Display Classification */}
-      <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold" }}>
-        Classification: {data.classification}
-      </Typography>
+      <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold", color: "darkred" }}>
+      Classification: {toRegularCase(data.classification)}
+    </Typography>
 
       <Typography variant="h6" mb={2}>Extracted vs Redacted Text:</Typography>
       <Box sx={{ display: "flex", gap: 4, justifyContent: "center", alignItems: "flex-start" }}>

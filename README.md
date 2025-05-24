@@ -16,8 +16,7 @@ Redactify_lux is an intelligent document automation tool designed to streamline 
 
 - **Backend**: Python, FastAPI
 - **Machine Learning**: Scikit-learn / Custom models for classification and redaction
-- **OCR**: Tesseract OCR
-- **Containerization**: Docker
+
 
 ## Installation
 
@@ -26,3 +25,20 @@ Redactify_lux is an intelligent document automation tool designed to streamline 
    ```bash
    git clone https://github.com/alexparambil/Redactify_lux.git
    cd Redactify_lux/backend
+## Backend (FastAPI)
+   cd backend
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload
+
+APIs
+### 🔹 POST /classify/
+- Upload a PDF
+- Returns: classification label, character count, etc.
+
+### 🔹 POST /redact/
+- Upload a PDF + optional `output_format` query ("text", "pdf", or "both")
+- Returns: redacted text and/or redacted PDF (as download)
+
+### 🔹 POST /process/
+- Upload a PDF
+- Returns: classification label,redacted text and redacted PDF  character count, etc.

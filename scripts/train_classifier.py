@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 import joblib
-
+#scripts/classifier_dataset.json
 # Load data
 with open("scripts/classifier_dataset.json", encoding="utf-8") as f:
     data = json.load(f)
