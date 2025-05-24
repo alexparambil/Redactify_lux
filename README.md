@@ -26,9 +26,9 @@ Redactify_lux is an intelligent document automation tool designed to streamline 
    git clone https://github.com/alexparambil/Redactify_lux.git
    cd Redactify_lux/backend
 ## Backend (FastAPI)
-   cd backend
-   pip install -r requirements.txt
-   uvicorn app.main:app --reload
+- cd backend
+- pip install -r requirements.txt
+- uvicorn app.main:app --reload
 
 APIs
 ### 🔹 POST /classify/
